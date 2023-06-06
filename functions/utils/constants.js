@@ -48,6 +48,8 @@ const ERROR_RETRIEVING_MSGS_ORDER =
 const DB_CONNECTION_SUCCESSFULLY = "DB connection successful.";
 const ERROR_CONNECTING_DB = "Error connecting to the DB: ";
 const SERVER_LISTENING_ON_PORT = "Server listening on port ";
+const ERROR_SAVING_ADDRESS =
+  "An error ocurred when trying to save the Address.";
 
 module.exports = {
   MSG_READ,
@@ -88,4 +90,5 @@ module.exports = {
   ERROR_CONNECTING_DB,
   SERVER_LISTENING_ON_PORT,
   API_ROUTER_PATH,
+  ERROR_SAVING_ADDRESS,
 };
