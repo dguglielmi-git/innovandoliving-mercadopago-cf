@@ -1,0 +1,57 @@
+[
+    {
+            "id": 822038204,
+            "nickname": "TETE7892373",
+            "password": "qatest6432",
+            "site_status": "active",
+            "email": "test_user_76563853@testuser.com",                    
+            "credentials": {
+                    "test": {
+                        "access_token": "TEST-654019751816075-052005-b2014b5e220c4922b34e2321c223f266-231512312",
+                        "public_key": "TEST-94c163fd-0773-4e37-9423-3dad0b26c54a"
+                    },
+                    "production": {
+                        "acces_token": "APP_USR-2677197385011897-052005-1de97f4e6aa281f7e97d9ca7829b66f1-762338970",
+                        "public_key": "APP_USR-016030c1-ded9-4903-ba82-07821cf96bf5",
+                        "client_id": "2677197385011897",
+                        "client_secret": "J6lbnLM2V8edxYSWDzUMneM5OvtGVIKR"
+                    }
+                }            
+        },
+        {
+            "id": 822038274,
+            "nickname": "TESTYCSVO9AZ",
+            "password": "qatest9949",
+            "site_status": "active",
+            "email": "test_user_94316404@testuser.com",            
+            "credentials": {
+                    "test": {
+                        "access_token": "TEST-654019751816075-052005-b2014b5e220c4922b34e2321c223f266-231512312",
+                        "public_key": "TEST-94c163fd-0773-4e37-9423-3dad0b26c54a"
+                    },
+                    "production": {
+                        "acces_token": "APP_USR-2677197385011897-052005-1de97f4e6aa281f7e97d9ca7829b66f1-762338970",
+                        "public_key": "APP_USR-016030c1-ded9-4903-ba82-07821cf96bf5",
+                        "client_id": "2677197385011897",
+                        "client_secret": "J6lbnLM2V8edxYSWDzUMneM5OvtGVIKR"
+                    }
+                }            
+        },
+        {
+            "id": 1067504867,
+            "nickname": "TETE1022647",
+            "password": "qatest253",
+            "site_status": "active",
+            "email": "test_user_88489125@testuser.com"
+        },
+        {
+            "id": 1067612019,
+            "nickname": "TESTGNGJHAOX",
+            "password": "qatest9795",
+            "site_status": "active",
+            "email": "test_user_37728814@testuser.com"
+        }
+]
+
+
+// TETE1022647 related to this project
