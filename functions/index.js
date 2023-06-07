@@ -4,7 +4,7 @@ const express = require("express");
 const functions = require("firebase-functions");
 const { connectToDatabase } = require("./services/dbconfig");
 const { API_ROUTER_PATH } = require("./utils/constants");
-const router = require("./routes/mpRoute");
+const router = require('./routes/routes');
 
 connectToDatabase();
 
