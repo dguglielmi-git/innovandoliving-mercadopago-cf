@@ -10,7 +10,7 @@ const AddressSchema = new Schema({
   phone: String,
   users_permissions_user: Schema.Types.ObjectId,
   formatted_distance: String,
-  value_distance: BigInt,
+  value_distance: Number,
   email_url: String,
 });
 
