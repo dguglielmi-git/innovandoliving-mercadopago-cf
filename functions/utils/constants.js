@@ -58,6 +58,8 @@ const UNAUTHORIZED_USER_ADDRESS_OPERATION =
 const ADDRESS_SUCCESSFULLY_REMOVED =
   "The address has been successfully removed";
 const ADDRESS_NOT_FOUND = "Address not found.";
+const ERROR_UPDATING_ADDRESS =
+  "An error occurred when trying to update the address.";
 
 module.exports = {
   MSG_READ,
@@ -104,4 +106,5 @@ module.exports = {
   UNAUTHORIZED_USER_ADDRESS_OPERATION,
   ADDRESS_SUCCESSFULLY_REMOVED,
   ADDRESS_NOT_FOUND,
+  ERROR_UPDATING_ADDRESS,
 };
