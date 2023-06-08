@@ -6,9 +6,9 @@ const {
   ERROR_SAVING_ADDRESS,
   ERROR_FINDING_ADDRESS,
   ERROR_DELETING_ADDRESS,
-  UNAUTHORIZED_USER_ADDRESS_OPERATION,
   ADDRESS_SUCCESSFULLY_REMOVED,
   ADDRESS_NOT_FOUND,
+  ERROR_UPDATING_ADDRESS,
 } = require("../utils/constants");
 
 const createAddress = async (req, res) => {
@@ -67,15 +67,9 @@ const findAddressById = async (req, res) => {
 
   try {
     const { id } = jwt.verify(token, process.env.SECRETJWTKEY);
-    const addressFound = await Address.findById(req.params.id);
-    if (addressFound) {
-      const userOwner = addressFound.users_permissions_user?._id;
-      if (userOwner.toString() !== id.toString()) {
-        return res.status(HTTP_UNAUTHORIZED).json({
-          error: UNAUTHORIZED_USER_ADDRESS_OPERATION,
-        });
-      }
-    }
+    const addressFound = await Address.findById(req.params.id).where({
+      users_permissions_user: id,
+    });
 
     return res.json(addressFound);
   } catch (error) {
@@ -96,15 +90,11 @@ const deleteAddressById = async (req, res) => {
 
   try {
     const { id } = jwt.verify(token, process.env.SECRETJWTKEY);
-    const addressFound = await Address.findOne({_id: req.params.id});
+    const addressFound = await Address.findOne({ _id: req.params.id }).where({
+      users_permissions_user: id,
+    });
 
     if (addressFound) {
-      const userOwner = addressFound.users_permissions_user?._id;
-      if (userOwner.toString() !== id.toString()) {
-        return res.status(HTTP_UNAUTHORIZED).json({
-          error: UNAUTHORIZED_USER_ADDRESS_OPERATION,
-        });
-      }
       await addressFound.remove();
       return res.json({
         result: ADDRESS_SUCCESSFULLY_REMOVED,
@@ -122,9 +112,39 @@ const deleteAddressById = async (req, res) => {
   }
 };
 
+const updateAddress = async (req, res) => {
+  const token = req.header("x-token");
+  if (!token) {
+    return res.status(HTTP_UNAUTHORIZED).json({
+      error: REQUEST_WITHOUT_TOKEN,
+    });
+  }
+
+  try {
+    const updatedBody = req.body;
+    await Address.findOneAndUpdate({ _id: req.params.id }, updatedBody)
+      .then(() => {
+        res.json({
+          result: ADDRESS_SUCCESSFULLY_REMOVED,
+        });
+      })
+      .catch((error) => {
+        res.status(HTTP_SERVER_ERROR).json({
+          error: `${ERROR_UPDATING_ADDRESS} - error: ${error}`,
+        });
+      });
+  } catch (error) {
+    console.error(error);
+    return res.json({
+      response: `${ERROR_UPDATING_ADDRESS} - error: ${error}`,
+    });
+  }
+};
+
 module.exports = {
   createAddress,
   findAddress,
   findAddressById,
   deleteAddressById,
+  updateAddress,
 };
