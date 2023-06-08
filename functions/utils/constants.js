@@ -49,7 +49,15 @@ const DB_CONNECTION_SUCCESSFULLY = "DB connection successful.";
 const ERROR_CONNECTING_DB = "Error connecting to the DB: ";
 const SERVER_LISTENING_ON_PORT = "Server listening on port ";
 const ERROR_SAVING_ADDRESS =
-  "An error ocurred when trying to save the Address.";
+  "An error occurred when trying to save the Address.";
+const ERROR_FINDING_ADDRESS = "An error occurred when finding an address.";
+const ERROR_DELETING_ADDRESS =
+  "An error occurred when trying to delete an address";
+const UNAUTHORIZED_USER_ADDRESS_OPERATION =
+  "The provided address ID does not belong to the requester.";
+const ADDRESS_SUCCESSFULLY_REMOVED =
+  "The address has been successfully removed";
+const ADDRESS_NOT_FOUND = "Address not found.";
 
 module.exports = {
   MSG_READ,
@@ -91,4 +99,9 @@ module.exports = {
   SERVER_LISTENING_ON_PORT,
   API_ROUTER_PATH,
   ERROR_SAVING_ADDRESS,
+  ERROR_FINDING_ADDRESS,
+  ERROR_DELETING_ADDRESS,
+  UNAUTHORIZED_USER_ADDRESS_OPERATION,
+  ADDRESS_SUCCESSFULLY_REMOVED,
+  ADDRESS_NOT_FOUND,
 };
