@@ -61,6 +61,7 @@ const ADDRESS_NOT_FOUND = "Address not found.";
 const ERROR_UPDATING_ADDRESS =
   "An error occurred when trying to update the address.";
 const ERROR_GETTING_CART = "An error occurred when trying to get the cart";
+const ERROR_GETTING_VALID_TOKEN = "Error getting a valid Token - error:";
 
 module.exports = {
   MSG_READ,
@@ -109,4 +110,5 @@ module.exports = {
   ADDRESS_NOT_FOUND,
   ERROR_UPDATING_ADDRESS,
   ERROR_GETTING_CART,
+  ERROR_GETTING_VALID_TOKEN,
 };
