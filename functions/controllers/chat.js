@@ -1,7 +1,7 @@
 const Chat = require("../models/chat");
 const Owner = require("../models/owner");
 const Order = require("../models/order");
-const Product = require("../models/producto");
+const Product = require("../models/product");
 const jwt = require("jsonwebtoken");
 const { HTTP_UNAUTHORIZED, HTTP_NOT_FOUND } = require("../utils/httpCode");
 const {
