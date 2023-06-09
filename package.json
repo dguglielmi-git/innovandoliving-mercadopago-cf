@@ -1,6 +1,6 @@
 {
   "name": "InnovandoLiving Backend Cloud Function",
-  "version": "2.1.0-rc",
+  "version": "2.2.0-rc",
   "author": "Daniel Guglielmi",
   "dependencies": {
     "firebase-functions": "^4.4.0",
