@@ -1,17 +1,12 @@
 const Product = require("../models/product");
-const {
-  REQUEST_WITHOUT_TOKEN,
-  ERROR_FINDING_ADDRESS,
-} = require("../utils/constants");
+const { ERROR_FINDING_ADDRESS } = require("../utils/constants");
 const {
   ERROR_GETTING_PRODUCTS,
   ERROR_GETTING_PRODUCTS_BY_PLATFORM,
 } = require("../utils/constants/productConstants");
-const { getValidToken, errorWithoutToken } = require("../utils/utils");
 
 const getPublishedProducts = async (req, res) => {
   try {
-    await getValidToken(req);
     const { limit, sort, publish } = req.query;
 
     const productList = await Product.find({ publish })
@@ -21,9 +16,6 @@ const getPublishedProducts = async (req, res) => {
     return res.json(productList);
   } catch (error) {
     console.error(error);
-    if (error === REQUEST_WITHOUT_TOKEN) {
-      return errorWithoutToken(res);
-    }
     return res.json({
       response: `${ERROR_GETTING_PRODUCTS} - error: ${error}`,
     });
@@ -32,7 +24,6 @@ const getPublishedProducts = async (req, res) => {
 
 const getProductsByPlatform = async (req, res) => {
   try {
-    await getValidToken(req);
     const { sort, skip, limit } = req.query;
 
     const productByPlatformList = await Product.find()
@@ -49,9 +40,6 @@ const getProductsByPlatform = async (req, res) => {
     );
   } catch (error) {
     console.error(error);
-    if (error === REQUEST_WITHOUT_TOKEN) {
-      return errorWithoutToken(res);
-    }
     return res.json({
       response: `${ERROR_GETTING_PRODUCTS_BY_PLATFORM} - error: ${error}`,
     });
@@ -60,8 +48,6 @@ const getProductsByPlatform = async (req, res) => {
 
 const getProductById = async (req, res) => {
   try {
-    await getValidToken(req);
-
     const productFound = await Product.findById(req.params.id).populate({
       path: "platform",
     });
@@ -69,9 +55,6 @@ const getProductById = async (req, res) => {
     return res.json(productFound);
   } catch (error) {
     console.error(error);
-    if (error === REQUEST_WITHOUT_TOKEN) {
-      return errorWithoutToken(res);
-    }
     return res.json({
       response: `${ERROR_FINDING_ADDRESS} - error: ${error}`,
     });
@@ -80,8 +63,6 @@ const getProductById = async (req, res) => {
 
 const getProductByTitle = async (req, res) => {
   try {
-    await getValidToken(req);
-
     const productFound = await Product.find()
       .where({
         title: {
@@ -95,14 +76,11 @@ const getProductByTitle = async (req, res) => {
     return res.json(productFound);
   } catch (error) {
     console.error(error);
-    if (error === REQUEST_WITHOUT_TOKEN) {
-      return errorWithoutToken(res);
-    }
     return res.json({
       response: `${ERROR_FINDING_ADDRESS} - error: ${error}`,
     });
   }
-}
+};
 
 module.exports = {
   getPublishedProducts,
