@@ -9,6 +9,7 @@ const {
   ADDRESS_SUCCESSFULLY_REMOVED,
   ADDRESS_NOT_FOUND,
   ERROR_UPDATING_ADDRESS,
+  ADDRESS_SUCCESSFULLY_UPDATED,
 } = require("../utils/constants");
 
 const createAddress = async (req, res) => {
@@ -125,7 +126,7 @@ const updateAddress = async (req, res) => {
     await Address.findOneAndUpdate({ _id: req.params.id }, updatedBody)
       .then(() => {
         res.json({
-          result: ADDRESS_SUCCESSFULLY_REMOVED,
+          result: ADDRESS_SUCCESSFULLY_UPDATED,
         });
       })
       .catch((error) => {
