@@ -57,6 +57,8 @@ const UNAUTHORIZED_USER_ADDRESS_OPERATION =
   "The provided address ID does not belong to the requester.";
 const ADDRESS_SUCCESSFULLY_REMOVED =
   "The address has been successfully removed";
+const ADDRESS_SUCCESSFULLY_UPDATED =
+  "The address has been successfully updated.";
 const ADDRESS_NOT_FOUND = "Address not found.";
 const ERROR_UPDATING_ADDRESS =
   "An error occurred when trying to update the address.";
@@ -109,4 +111,5 @@ module.exports = {
   ADDRESS_NOT_FOUND,
   ERROR_UPDATING_ADDRESS,
   ERROR_GETTING_VALID_TOKEN,
+  ADDRESS_SUCCESSFULLY_UPDATED,
 };
