@@ -8,7 +8,7 @@ const { getValidToken, errorWithoutToken } = require("../utils/utils");
 const getDocTypes = async (req, res) => {
   try {
     await getValidToken(req);
-    const docTypes = await Doctype().find();
+    const docTypes = await Doctype.find();
     return res.json(docTypes);
   } catch (error) {
     console.error(error);
