@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const { REQUEST_WITHOUT_TOKEN } = require("../utils/constants");
 const {
   ERROR_FINDING_FAVORITES,
-  ERROR_GETTING_FAVORITE_LIST,
 } = require("../utils/constants/favoriteConstants");
 const { getValidToken, errorWithoutToken } = require("../utils/utils");
 const {
@@ -12,6 +11,7 @@ const {
   HTTP_REQUEST_CREATED,
   HTTP_REQUEST_ACCEPTED,
   HTTP_REQUEST_OK,
+  HTTP_SERVER_ERROR,
 } = require("../utils/httpCode");
 
 const isFavorite = async (req, res) => {
@@ -99,14 +99,10 @@ const getFavorites = async (req, res) => {
     if (favoritesFound?.length > 0) {
       return res.json(favoritesFound);
     }
+    return res.status(HTTP_NOT_FOUND).end();
   } catch (error) {
     console.error(error);
-    if (error === REQUEST_WITHOUT_TOKEN) {
-      return errorWithoutToken(res);
-    }
-    return res.json({
-      response: `${ERROR_GETTING_FAVORITE_LIST} - error: ${error}`,
-    });
+    return res.status(HTTP_SERVER_ERROR).end();
   }
 };
 
