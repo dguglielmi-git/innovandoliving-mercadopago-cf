@@ -30,7 +30,6 @@ const createToken = async (user) => {
 const userLogin = async (req, res) => {
   try {
     const { identifier, password } = req.body;
-    console.log(req.body);
 
     const userFound = await User.findOne({ email: identifier?.toLowerCase() });
     if (!userFound) {
