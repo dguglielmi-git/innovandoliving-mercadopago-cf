@@ -7,10 +7,12 @@ const HTTP_REQUEST_OK = 200;
 /** @description  201 Created: The request has been fulfilled, and a new resource has been
  * created as a result.*/
 const HTTP_REQUEST_CREATED = 201;
-/** @description  202 Accepted: The request has been accepted for processing, but the processing is not yet complete.
+/** @description  202 Accepted: The request has been accepted for processing,
+ * but the processing is not yet complete.
  * This status code is typically used for asynchronous operations.*/
 const HTTP_REQUEST_ACCEPTED = 202;
-/** @description  204 No Content: The server has successfully processed the request, but there is no content to return.
+/** @description  204 No Content: The server has successfully processed the request, but
+ * there is no content to return.
  * This is commonly used for requests that don't require a response body.*/
 const HTTP_REQUEST_NO_CONTENT = 204;
 
