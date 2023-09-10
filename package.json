@@ -4,8 +4,11 @@
   "author": "Daniel Guglielmi",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "firebase-functions": "^4.4.0",
+    "dotenv": "^16.3.1",
+    "express-validator": "^7.0.1",
+    "firebase-functions": "^4.4.1",
     "firebase-tools": "^12.2.1",
+    "mercadopago": "^1.5.17",
     "mongoose": "^7.2.2"
   }
 }
