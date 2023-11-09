@@ -1,4 +1,3 @@
-const Address = require('../models/address')
 const jwt = require('jsonwebtoken')
 const { HTTP_UNAUTHORIZED, HTTP_NOT_FOUND } = require('../utils/httpCode')
 const {
@@ -12,6 +11,7 @@ const {
   ADDRESS_SUCCESSFULLY_UPDATED,
   SUCCESSFUL_OPERATION,
 } = require('../utils/constants')
+const AddressService = require('../services/address')
 
 const validateToken = (token, res) => {
   if (!token) {
@@ -21,22 +21,14 @@ const validateToken = (token, res) => {
   }
 }
 
-// It should call to the service with a method called createUserAddress
 const createAddress = async (req, res) => {
-  const token = req.header('x-token')
-  if (!token) {
-    return res.status(HTTP_UNAUTHORIZED).json({
-      error: REQUEST_WITHOUT_TOKEN,
-    })
-  }
+  validateToken(req.header('x-token'), res)
 
   try {
     const { id } = jwt.verify(token, process.env.SECRETJWTKEY)
-    const address = new Address(req.body)
-    address.users_permissions_user = id
+    const newAddress = await AddressService.createUserAddress(req.body, id)
 
-    await address.save()
-    return res.json(address)
+    return res.json(newAddress)
   } catch (error) {
     console.error(error)
     return res.json({
@@ -45,20 +37,12 @@ const createAddress = async (req, res) => {
   }
 }
 
-// this should call to a service called findUserAddresses
 const findAddress = async (req, res) => {
-  const token = req.header('x-token')
-  if (!token) {
-    return res.status(HTTP_UNAUTHORIZED).json({
-      error: REQUEST_WITHOUT_TOKEN,
-    })
-  }
+  validateToken(req.header('x-token'), res)
 
   try {
     const { id } = jwt.verify(token, process.env.SECRETJWTKEY)
-    const addressesFound = await Address.find().where({
-      users_permissions_user: id,
-    })
+    const addressesFound = await AddressService.findUserAddresses(id)
 
     return res.json(addressesFound)
   } catch (error) {
@@ -69,20 +53,15 @@ const findAddress = async (req, res) => {
   }
 }
 
-// in the service, the name of the method should be findUserAddressById
 const findAddressById = async (req, res) => {
-  const token = req.header('x-token')
-  if (!token) {
-    return res.status(HTTP_UNAUTHORIZED).json({
-      error: REQUEST_WITHOUT_TOKEN,
-    })
-  }
+  validateToken(req.header('x-token'), res)
 
   try {
     const { id } = jwt.verify(token, process.env.SECRETJWTKEY)
-    const addressFound = await Address.findById(req.params.id).where({
-      users_permissions_user: id,
-    })
+    const addressFound = await AddressService.findUserAddressById(
+      req.params.id,
+      id,
+    )
 
     return res.json(addressFound)
   } catch (error) {
@@ -93,23 +72,17 @@ const findAddressById = async (req, res) => {
   }
 }
 
-// when calling to the service it should call to deleteUserAddressById
 const deleteAddressById = async (req, res) => {
-  const token = req.header('x-token')
-  if (!token) {
-    return res.status(HTTP_UNAUTHORIZED).json({
-      error: REQUEST_WITHOUT_TOKEN,
-    })
-  }
+  validateToken(req.header('x-token'), res)
 
   try {
     const { id } = jwt.verify(token, process.env.SECRETJWTKEY)
-    const addressFound = await Address.findOne({ _id: req.params.id }).where({
-      users_permissions_user: id,
-    })
+    const response = await AddressService.deleteUserAddressById(
+      req.params.id,
+      id,
+    )
 
-    if (addressFound) {
-      await addressFound.remove()
+    if (response === SUCCESSFUL_OPERATION) {
       return res.json({
         result: ADDRESS_SUCCESSFULLY_REMOVED,
       })
@@ -126,28 +99,24 @@ const deleteAddressById = async (req, res) => {
   }
 }
 
-// when creating the service, it should call to updateUserAddressById
 const updateAddress = async (req, res) => {
-  const token = req.header('x-token')
-  if (!token) {
-    return res.status(HTTP_UNAUTHORIZED).json({
-      error: REQUEST_WITHOUT_TOKEN,
-    })
-  }
+  validateToken(req.header('x-token'), res)
 
   try {
-    const updatedBody = req.body
-    await Address.findOneAndUpdate({ _id: req.params.id }, updatedBody)
-      .then(() => {
-        res.json({
-          result: ADDRESS_SUCCESSFULLY_UPDATED,
-        })
+    const response = await AddressService.updateUserAddress(
+      req.body,
+      req.params.id,
+    )
+
+    if (response === SUCCESSFUL_OPERATION) {
+      return res.json({
+        result: ADDRESS_SUCCESSFULLY_UPDATED,
       })
-      .catch((error) => {
-        res.status(HTTP_SERVER_ERROR).json({
-          error: `${ERROR_UPDATING_ADDRESS} - error: ${error}`,
-        })
-      })
+    }
+
+    return res.status(HTTP_SERVER_ERROR).json({
+      error: `${ERROR_UPDATING_ADDRESS} - error: ${error}`,
+    })
   } catch (error) {
     console.error(error)
     return res.json({
