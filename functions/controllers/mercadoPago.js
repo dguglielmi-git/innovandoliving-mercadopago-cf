@@ -1,4 +1,5 @@
 const { MercadoPagoConfig, Preference } = require('mercadopago')
+const axios = require('axios')
 const Order = require('../models/order')
 const Owner = require('../models/owner')
 const OrderStatus = require('../models/orderStatus')
@@ -30,29 +31,39 @@ const {
 } = require('../utils/constants')
 const { HTTP_UNAUTHORIZED, HTTP_NOT_FOUND } = require('../utils/httpCode')
 
-const client = new MercadoPagoConfig({ access_token: process.env.ACCESS_TOKEN })
+const client = new MercadoPagoConfig({ accessToken: process.env.ACCESS_TOKEN })
 
 const mercadoPagoCheckout = (req, res) => {
   const { items } = req.body
+
+  const mercadoPagoHeaders = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
+  }
+
+  const body = {
+    back_urls: {
+      failure: process.env.URL_FAILURE_PAYMENT,
+      pending: process.env.URL_PENDING_PAYMENT,
+      success: process.env.URL_SUCCESSFUL_PAYMENT
+    },
+    auto_return: APPROVED_STATUS,
+    statement_descriptor: BUSINESS_NAME,
+    items
+  }
+  const urlPreference = 'https://api.mercadopago.com/checkout/preferences'
 
   if (items === undefined) {
     res.status(HTTP_NOT_FOUND)
     res.send(JSON.stringify({ error: NOT_ITEMS_RECEIVED }))
   } else {
-    const preference = new Preference(client)
-    preference
-      .create({
-        back_urls: {
-          failure: process.env.URL_FAILURE_PAYMENT,
-          pending: process.env.URL_PENDING_PAYMENT,
-          success: process.env.URL_SUCCESSFUL_PAYMENT
-        },
-        auto_return: APPROVED_STATUS,
-        statement_descriptor: BUSINESS_NAME,
-        items
+    axios
+      .post(urlPreference, body, { headers: mercadoPagoHeaders })
+      .then(response => {
+        const data = response.data
+        return res.send(JSON.stringify(data))
       })
-      .then(result => console.log(result))
-      .catch(error => console.log(error))
+      .catch(error => res.send(error))
   }
 }
 
@@ -77,7 +88,7 @@ const mercadoPagoRemoveOrder = async (req, res) => {
     const order = await Order.findOne({ paymentId: req.params.id })
 
     if (order) {
-      await order.remove()
+      await Order.deleteOne().where({ paymentId: req.params.id })
       return res.json({
         result: ORDER_SUCCESSFULLY_REMOVED
       })
@@ -484,9 +495,7 @@ const mercadoPagoGetMessagesByOrder = async (req, res) => {
     if (order) {
       return res.json(order.messages)
     }
-    return res.status(HTTP_NOT_FOUND).json({
-      response: ORDER_ID_NOT_FOUND
-    })
+    return res.status(HTTP_NOT_FOUND).json([])
   } catch (error) {
     console.log(error)
     return res.status(HTTP_UNAUTHORIZED).json({

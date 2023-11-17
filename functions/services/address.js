@@ -1,7 +1,7 @@
 const Address = require('../models/address')
 const {
   SUCCESSFUL_OPERATION,
-  UNSUCCESSFUL_OPERATION,
+  UNSUCCESSFUL_OPERATION
 } = require('../utils/constants')
 
 const createUserAddress = async (address, userId) => {
@@ -16,10 +16,10 @@ const createUserAddress = async (address, userId) => {
   }
 }
 
-const findUserAddresses = async (userId) => {
+const findUserAddresses = async userId => {
   try {
     const addressesFound = await Address.find().where({
-      users_permissions_user: userId,
+      users_permissions_user: userId
     })
     return addressesFound
   } catch (error) {
@@ -38,7 +38,7 @@ const findUserAddresses = async (userId) => {
 const findUserAddressById = async (addressId, userId) => {
   try {
     const addressFound = await Address.findById(addressId).where({
-      users_permissions_user: userId,
+      users_permissions_user: userId
     })
     return addressFound
   } catch (error) {
@@ -50,10 +50,12 @@ const findUserAddressById = async (addressId, userId) => {
 const deleteUserAddressById = async (addressId, userId) => {
   try {
     const addressFound = await Address.findOne({ _id: addressId }).where({
-      users_permissions_user: userId,
+      users_permissions_user: userId
     })
     if (addressFound) {
-      await addressFound.remove()
+      await Address.deleteOne({ _id: addressId }).where({
+        users_permissions_user: userId
+      })
       return SUCCESSFUL_OPERATION
     }
 
@@ -70,7 +72,7 @@ const updateUserAddress = async (addressDataUpdated, addressId) => {
       .then(() => {
         return UNSUCCESSFUL_OPERATION
       })
-      .catch((error) => {
+      .catch(error => {
         return UNSUCCESSFUL_OPERATION
       })
   } catch (error) {
@@ -84,5 +86,5 @@ module.exports = {
   findUserAddresses,
   findUserAddressById,
   deleteUserAddressById,
-  updateUserAddress,
+  updateUserAddress
 }
