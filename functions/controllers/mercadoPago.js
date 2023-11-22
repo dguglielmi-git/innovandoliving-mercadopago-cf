@@ -290,42 +290,28 @@ const mercadoPagoUpdatePendingBalance = async (req, res) => {
   }
 
   try {
-    const pendCash = req.body.pendingCash
-    const pendOther = req.body.pendingOther
-
     const { id } = jwt.verify(token, process.env.SECRETJWTKEY)
-    const owner = await Owner.findOne({}).where({ userOwnerId: id })
 
-    if (owner) {
-      const order = await Order.findOne({ _id: req.body.orderId })
-      if (!!pendCash) {
-        order.cashReceived = parseFloat(order.cashPending)
-        order.cashPending = 0
-      }
-      if (!!pendOther) {
-        order.creditReceived = parseFloat(order.creditPending)
-        order.creditPending = 0
-      }
-      order.purchaseTotalReceived =
-        parseFloat(order.creditReceived) + parseFloat(order.cashReceived)
-      order.purchaseTotalPendingPayment =
-        parseFloat(order.creditPending) + parseFloat(order.cashPending)
+    const { amountReceived } = req.body.newValues
 
-      if (parseFloat(order.purchaseTotalPendingPayment) === 0) {
-        const newStat = await updateStatus(order, id, ORDER_PROCESSED)
-        order.status = newStat.status
-        order.history = newStat.status_history
-        if (newStat.dateClosed) {
-          order.dateClosed = newStat.dateClosed
+    const order = await Order.findByIdAndUpdate(
+      req.body.orderId,
+      {
+        $inc: {
+          purchaseTotalReceived: amountReceived,
+          purchaseTotalPendingPayment: -amountReceived
         }
-      }
-      await order.save()
-      return res.json(order)
+      },
+      { new: true }
+    )
+
+    if (parseFloat(order?.purchaseTotalPendingPayment) === 0) {
+      const orderToUpdate = await updateStatus(order, id, ORDER_PROCESSED)
+      orderToUpdate.save()
+      return res.json(orderToUpdate)
     }
 
-    return res.status(HTTP_UNAUTHORIZED).json({
-      error: INSUFFICIENT_PRIVILEGES
-    })
+    return res.status(HTTP_NOT_FOUND).json({})
   } catch (error) {
     console.log(error)
     return res.status(HTTP_NOT_FOUND).json({
@@ -334,18 +320,18 @@ const mercadoPagoUpdatePendingBalance = async (req, res) => {
   }
 }
 
-const updateStatus = async (order, userId, newStatus) => {
+const updateStatus = async (order, userId, newStatusCode) => {
   const tempOrder = order
   const history = tempOrder.status_history
 
   history.push({
-    status: newStatus,
+    status: newStatusCode,
     modifiedBy: userId
   })
 
-  tempOrder.status = newStatus
+  tempOrder.status = newStatusCode
   tempOrder.status_history = history
-  if (newStatus == ORDER_FINISHED) {
+  if (newStatusCode == ORDER_FINISHED) {
     tempOrder.dateClosed = Date.now()
   }
 

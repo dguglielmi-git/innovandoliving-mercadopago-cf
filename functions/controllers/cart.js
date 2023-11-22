@@ -65,8 +65,10 @@ const addToCart = async (req, res) => {
     await getValidToken(req)
 
     const productToCart = new Cart(req.body)
+    console.log(req.body)
 
-    await productToCart.save()
+   const result = await productToCart.save()
+   console.log(result)
     return res.json(productToCart)
   } catch (error) {
     console.error(error)
