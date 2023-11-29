@@ -32,7 +32,6 @@ const updateConfigurations = async (req, res) => {
     await getValidToken(req);
 
     const updateBody = req.body;
-    console.log(updateBody)
     await Configuration.findOneAndUpdate({ _id: req.params.id }, updateBody)
       .then(() => {
         res.json({
