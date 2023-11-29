@@ -123,7 +123,7 @@ const updateUser = async (req, res) => {
           });
         });
     } else {
-      console.log(req.body)
+
       await User.findOneAndUpdate({ _id: id }, req.body)
         .then(() => {
           return res.status(HTTP_REQUEST_OK).json({
