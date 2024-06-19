@@ -7,6 +7,7 @@ const {
 
 const getPublishedProducts = async (req, res) => {
   try {
+
     const { limit, sort, publish } = req.query;
 
     const productList = await Product.find({ publish })

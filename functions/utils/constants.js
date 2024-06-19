@@ -64,8 +64,16 @@ const ERROR_UPDATING_ADDRESS =
 const ERROR_GETTING_VALID_TOKEN = 'Error getting a valid Token - error:'
 const SUCCESSFUL_OPERATION = true
 const UNSUCCESSFUL_OPERATION = false
+const ERROR_GETTING_CART = 'An error occurred when trying to get the cart'
+const PLATFORM_SUCCESSFULLY_REMOVED =
+  'The Category has been removed successfully.'
+const CATEGORY_NOT_FOUND = 'Category does not exist.'
+const ERROR_DELETING_CATEGORY =
+  'An error occurred when trying to delete the category'
+const PLATFORM_ERROR_SAVING = 'An error occurred when trying to save the platform.'
 
 module.exports = {
+  PLATFORM_ERROR_SAVING,
   MSG_READ,
   MSG_UNREAD,
   ORDER_PROCESSED,
@@ -115,4 +123,8 @@ module.exports = {
   ADDRESS_SUCCESSFULLY_UPDATED,
   SUCCESSFUL_OPERATION,
   UNSUCCESSFUL_OPERATION,
+  PLATFORM_SUCCESSFULLY_REMOVED,
+  CATEGORY_NOT_FOUND,
+  ERROR_DELETING_CATEGORY,
+  ERROR_GETTING_CART
 }
