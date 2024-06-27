@@ -11,7 +11,6 @@ const Platform = require('./platform');
  * @property {Array} screenshots - This field contains the array of the url to show other pictures of the product than the main one.
  * @property {Date} updateAt - This field is automatically updated by Strapi after a modification is performed. Once Strapi is deprecated, this field is updated manually.
  * @property {Schema.Types.ObjectId} created_by - Id of the user that created the product.
- * @property {Schema.Types.ObjectId} poster - Id of the picture used by Strapi, this field will be deprecated in coming versions.
  * @property {Schema.Types.ObjectId} updated_by - Id of the user who updated the product.
  * @property {number} price - Price of the product.
  * @property {Date} published_at - Automatic field used by Strapi to save the date of this product is publish and available. It's not currently being used.
@@ -28,10 +27,11 @@ const ProductSchema = new Schema({
     ref: "Platform",
   },
   releaseDate: String,
-  screenshots: [{}],
+  screenshots: [{
+    url: String,
+  }],
   updateAt: Date,
   created_by: Schema.Types.ObjectId,
-  poster: Schema.Types.ObjectId,
   updated_by: Schema.Types.ObjectId,
   price: {
     type: Schema.Types.Decimal128,

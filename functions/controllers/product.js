@@ -1,9 +1,11 @@
 const Product = require("../models/product");
-const { ERROR_FINDING_ADDRESS } = require("../utils/constants");
+const { ERROR_FINDING_ADDRESS, REQUEST_WITHOUT_TOKEN } = require("../utils/constants");
 const {
   ERROR_GETTING_PRODUCTS,
   ERROR_GETTING_PRODUCTS_BY_PLATFORM,
+  ERROR_SAVING_PRODUCT,
 } = require("../utils/constants/productConstants");
+const { HTTP_UNAUTHORIZED } = require('../utils/httpCode');
 
 const getPublishedProducts = async (req, res) => {
   try {
@@ -83,9 +85,31 @@ const getProductByTitle = async (req, res) => {
   }
 };
 
+const createProduct = async (req, res) => {
+  const token = req.header('x-token')
+  if (!token) {
+    return res.status(HTTP_UNAUTHORIZED).json({
+      error: REQUEST_WITHOUT_TOKEN
+    })
+  }
+
+  try {
+    const product = new Product(req.body)
+
+    await product.save()
+    return res.json(product)
+  } catch (error) {
+    console.error(error)
+    return res.json({
+      response: `${ERROR_SAVING_PRODUCT} - error: ${error}`
+    })
+  }
+}
+
 module.exports = {
   getPublishedProducts,
   getProductsByPlatform,
   getProductById,
   getProductByTitle,
+  createProduct
 };
