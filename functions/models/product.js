@@ -1,5 +1,5 @@
-const { Schema, model } = require("mongoose");
-const Platform = require('./platform');
+const { Schema, model } = require('mongoose')
+const Platform = require('./platform')
 
 /**
  * @typedef ProductSchema
@@ -16,6 +16,7 @@ const Platform = require('./platform');
  * @property {Date} published_at - Automatic field used by Strapi to save the date of this product is publish and available. It's not currently being used.
  * @property {Date} createAt - Automatic field used by Strapi to store the Date of creation.
  * @property {boolean} publish - This field is used to mark a product visible in the main screen or not.
+ * @property {boolean} active - This field is used to know if the product is still available in the system for new transactions or orders
  */
 
 const ProductSchema = new Schema({
@@ -24,33 +25,39 @@ const ProductSchema = new Schema({
   url: String,
   platform: {
     type: Schema.Types.ObjectId,
-    ref: "Platform",
+    ref: 'Platform'
   },
   releaseDate: String,
-  screenshots: [{
-    url: String,
-  }],
+  screenshots: [
+    {
+      url: String
+    }
+  ],
   updateAt: Date,
   created_by: Schema.Types.ObjectId,
   updated_by: Schema.Types.ObjectId,
   price: {
     type: Schema.Types.Decimal128,
     get: function (value) {
-      return value ? Number(value.toString()) : null;
-    },
+      return value ? Number(value.toString()) : null
+    }
   },
   published_at: {
     type: Date,
-    default: Date.now,
+    default: Date.now
   },
   createAt: {
     type: Date,
-    default: Date.now,
+    default: Date.now
   },
   publish: {
     type: Boolean,
-    default: false,
+    default: false
   },
-});
+  active: {
+    type: Boolean,
+    default: true
+  },
+})
 
-module.exports = model("Producto", ProductSchema);
+module.exports = model('Producto', ProductSchema)
