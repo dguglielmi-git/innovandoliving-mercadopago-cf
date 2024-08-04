@@ -13,6 +13,7 @@ const Platform = require('./platform')
  * @property {Schema.Types.ObjectId} created_by - Id of the user that created the product.
  * @property {Schema.Types.ObjectId} updated_by - Id of the user who updated the product.
  * @property {number} price - Price of the product.
+ * @property {number} discount - Percentage of the discount to apply to this product.
  * @property {Date} published_at - Automatic field used by Strapi to save the date of this product is publish and available. It's not currently being used.
  * @property {Date} createAt - Automatic field used by Strapi to store the Date of creation.
  * @property {boolean} publish - This field is used to mark a product visible in the main screen or not.
@@ -42,6 +43,7 @@ const ProductSchema = new Schema({
       return value ? Number(value.toString()) : null
     }
   },
+  discount: Number,
   published_at: {
     type: Date,
     default: Date.now
@@ -57,7 +59,7 @@ const ProductSchema = new Schema({
   active: {
     type: Boolean,
     default: true
-  },
+  }
 })
 
 module.exports = model('Producto', ProductSchema)
