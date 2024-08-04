@@ -32,14 +32,14 @@ const getPlatforms = async (req, res) => {
   }
 }
 
-const addPlatform = async (req, res) =>{
+const addPlatform = async (req, res) => {
   const token = req.header('x-token')
   if (!token) {
     return res.status(HTTP_UNAUTHORIZED).json({
       error: REQUEST_WITHOUT_TOKEN
     })
   }
-  
+
   try {
     const { id } = jwt.verify(token, process.env.SECRETJWTKEY)
     const platform = new Platform(req.body)
@@ -63,7 +63,7 @@ const deletePlatform = async (req, res) => {
     const platformFound = await Platform.findOne({ _id: req.params.id })
 
     if (platformFound) {
-      await platformFound.remove()
+      await Platform.deleteOne({ _id: platformFound._id })
 
       return res.json({
         result: PLATFORM_SUCCESSFULLY_REMOVED

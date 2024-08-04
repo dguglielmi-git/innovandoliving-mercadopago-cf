@@ -70,9 +70,22 @@ const PLATFORM_SUCCESSFULLY_REMOVED =
 const CATEGORY_NOT_FOUND = 'Category does not exist.'
 const ERROR_DELETING_CATEGORY =
   'An error occurred when trying to delete the category'
-const PLATFORM_ERROR_SAVING = 'An error occurred when trying to save the platform.'
+const PLATFORM_ERROR_SAVING =
+  'An error occurred when trying to save the platform.'
+const PRODUCT_SUCCESSFULLY_UPDATED = 'The product was successfully updated.'
+const ERROR_UPDATING_PRODUCT =
+  'An error occurred when trying to update the product'
+const PRODUCT_SUCCESSFULLY_DELETED = 'The product was successfully deleted.'
+const ERROR_DELETING_PRODUCT =
+  'An error occurred when trying to delete the product'
+  const PRODUCT_NOT_FOUND = 'The product could not be found.'
 
 module.exports = {
+  PRODUCT_NOT_FOUND,
+  PRODUCT_SUCCESSFULLY_DELETED,
+  ERROR_DELETING_PRODUCT,
+  ERROR_UPDATING_PRODUCT,
+  PRODUCT_SUCCESSFULLY_UPDATED,
   PLATFORM_ERROR_SAVING,
   MSG_READ,
   MSG_UNREAD,

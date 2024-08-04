@@ -6,6 +6,6 @@ const router = Router()
 
 router.get('/platforms', [fieldValidator], getPlatforms)
 router.post('/platform', [fieldValidator], addPlatform)
-router.delete('/platform', [fieldValidator], deletePlatform)
+router.delete('/platform/:id', [fieldValidator], deletePlatform)
 
 module.exports = router

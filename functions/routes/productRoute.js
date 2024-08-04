@@ -5,12 +5,16 @@ const {
   getProductsByPlatform,
   getProductById,
   getProductByTitle,
-  createProduct
+  createProduct,
+  updateProduct,
+  getAllProducts,
+  deleteProduct
 } = require('../controllers/product')
 
 const router = Router()
 
 // [GET]
+router.get('/getAllProducts', [fieldValidator], getAllProducts)
 router.get('/publishedProducts', [fieldValidator], getPublishedProducts)
 router.get(
   '/productsByPlatform/:platform',
@@ -19,6 +23,12 @@ router.get(
 )
 router.get('/productById/:id', [fieldValidator], getProductById)
 router.get('/productByTitle/:title', [fieldValidator], getProductByTitle)
+
+// [PUT]
+router.put('/product/:id', [fieldValidator], updateProduct)
+
+// [DELETE]
+router.delete('/deleteProduct/:id', [fieldValidator], deleteProduct)
 
 // [POST]
 router.post('/product', [fieldValidator], createProduct)
