@@ -12,7 +12,7 @@ const {
   ITEM_SUCCESSFULLY_REMOVED,
   ITEM_NOT_FOUND
 } = require('../utils/constants/cartConstants')
-const { HTTP_UNAUTHORIZED, HTTP_NOT_FOUND } = require('../utils/httpCode')
+const { HTTP_NOT_FOUND } = require('../utils/httpCode')
 
 const getCart = async (req, res) => {
   try {
@@ -44,7 +44,7 @@ const cleanCart = async (req, res) => {
   try {
     const token = await getValidToken(req)
     const { id } = jwt.verify(token, process.env.SECRETJWTKEY)
-    
+
     await Cart.deleteMany({ users_permissions_user: id })
     return res.json({
       response: CART_CLEANED_SUCCESSFULLY
@@ -66,7 +66,7 @@ const addToCart = async (req, res) => {
 
     const productToCart = new Cart(req.body)
 
-   const result = await productToCart.save()
+    const result = await productToCart.save()
     return res.json(productToCart)
   } catch (error) {
     console.error(error)

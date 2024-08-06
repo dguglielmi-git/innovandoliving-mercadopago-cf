@@ -24,7 +24,9 @@ SECRETJWTKEY="Secret Json Web Token key"
 
 Below you will find some examples of the required format:
 MONGODB_CNN=mongodb+srv://username:password@cluster0.m8scl.mongodb.net/collectionName
+
 ACCESS_TOKEN=APP_USR-7283909654097762-020111-081a472d19b4d1fa123df44404e1a753-1057422018
+
 SECRETJWTKEY=0ds24094-9873-22f3-7efe-e912d8f5fe20
 
 ## Deploy 📦
