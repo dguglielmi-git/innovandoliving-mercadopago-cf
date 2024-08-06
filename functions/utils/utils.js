@@ -4,6 +4,8 @@ const {
 } = require("./constants");
 const { HTTP_UNAUTHORIZED } = require("./httpCode");
 
+const getJwtKey = () => process.env.SECRETJWTKEY;
+
 const getValidToken = async (req) => {
   try {
     const token = req.header("x-token");
@@ -26,4 +28,5 @@ const errorWithoutToken = (res) => {
 module.exports = {
   getValidToken,
   errorWithoutToken,
+  getJwtKey
 };

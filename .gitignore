@@ -65,3 +65,8 @@ node_modules/
 .env
 
 functions/node_modules/
+
+# temp
+.vscode
+package-lock.json
+*.lock

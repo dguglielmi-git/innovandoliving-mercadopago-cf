@@ -1,16 +1,17 @@
-const { Router } = require("express");
-const mercadoPagoRoutes = require("./mpRoute");
-const addressRoutes = require("./addressRoute");
-const cartRoutes = require("./cartRoutes");
-const productRoutes = require("./productRoute");
-const platformRoutes = require('./platformRoute');
+const { Router } = require('express')
+const fs = require('fs')
+const path = require('path')
 
-const router = Router();
+const router = Router()
 
-router.use(mercadoPagoRoutes);
-router.use(addressRoutes);
-router.use(cartRoutes);
-router.use(productRoutes);
-router.use(platformRoutes);
+const routeFiles = fs
+  .readdirSync(__dirname)
+  .filter(file => file !== 'routes.js')
 
-module.exports = router;
+routeFiles.forEach(file => {
+  const route = require(path.join(__dirname, file));
+  router.use(route);
+});
+
+
+module.exports = router

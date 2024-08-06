@@ -1,5 +1,5 @@
-const { Schema, model } = require("mongoose");
-const Platform = require('./platform');
+const { Schema, model } = require('mongoose')
+const Platform = require('./platform')
 
 /**
  * @typedef ProductSchema
@@ -11,12 +11,13 @@ const Platform = require('./platform');
  * @property {Array} screenshots - This field contains the array of the url to show other pictures of the product than the main one.
  * @property {Date} updateAt - This field is automatically updated by Strapi after a modification is performed. Once Strapi is deprecated, this field is updated manually.
  * @property {Schema.Types.ObjectId} created_by - Id of the user that created the product.
- * @property {Schema.Types.ObjectId} poster - Id of the picture used by Strapi, this field will be deprecated in coming versions.
  * @property {Schema.Types.ObjectId} updated_by - Id of the user who updated the product.
  * @property {number} price - Price of the product.
+ * @property {number} discount - Percentage of the discount to apply to this product.
  * @property {Date} published_at - Automatic field used by Strapi to save the date of this product is publish and available. It's not currently being used.
  * @property {Date} createAt - Automatic field used by Strapi to store the Date of creation.
  * @property {boolean} publish - This field is used to mark a product visible in the main screen or not.
+ * @property {boolean} active - This field is used to know if the product is still available in the system for new transactions or orders
  */
 
 const ProductSchema = new Schema({
@@ -25,32 +26,40 @@ const ProductSchema = new Schema({
   url: String,
   platform: {
     type: Schema.Types.ObjectId,
-    ref: "Platform",
+    ref: 'Platform'
   },
   releaseDate: String,
-  screenshots: [{}],
+  screenshots: [
+    {
+      url: String
+    }
+  ],
   updateAt: Date,
   created_by: Schema.Types.ObjectId,
-  poster: Schema.Types.ObjectId,
   updated_by: Schema.Types.ObjectId,
   price: {
     type: Schema.Types.Decimal128,
     get: function (value) {
-      return value ? Number(value.toString()) : null;
-    },
+      return value ? Number(value.toString()) : null
+    }
   },
+  discount: Number,
   published_at: {
     type: Date,
-    default: Date.now,
+    default: Date.now
   },
   createAt: {
     type: Date,
-    default: Date.now,
+    default: Date.now
   },
   publish: {
     type: Boolean,
-    default: false,
+    default: false
   },
-});
+  active: {
+    type: Boolean,
+    default: true
+  }
+})
 
-module.exports = model("Producto", ProductSchema);
+module.exports = model('Producto', ProductSchema)
