@@ -448,7 +448,7 @@ const mercadoPagoMarkMessageAsRead = async (req, res) => {
 
   try {
     const { id } = jwt.verify(token, process.env.SECRETJWTKEY)
-    const order = await Order.findOne({ _id: req.params.id, user: id })
+    const order = await Order.findOne({ _id: req.params.id, userId: id })
 
     if (order) {
       const orderModified = markAsRead(req.body.userType, order)
@@ -477,7 +477,7 @@ const mercadoPagoGetMessagesByOrder = async (req, res) => {
   try {
     const { id } = jwt.verify(token, process.env.SECRETJWTKEY)
 
-    const order = await Order.findOne({ _id: req.params.id, user: id })
+    const order = await Order.findOne({ _id: req.params.id, userId: id })
     if (order) {
       return res.json(order.messages)
     }

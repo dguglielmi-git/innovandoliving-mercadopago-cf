@@ -44,13 +44,6 @@ router.get(
 router.get("/chat/open", [fieldValidator], getOpenChats);
 router.get("/chat/unreadmsg", [fieldValidator], getUnreadMsg);
 
-// [POST]
-router.post("/payment", [fieldValidator], mercadoPagoCheckout);
-router.post("/order", [fieldValidator], mercadoPagoSaveOrder);
-router.post("/order/message", [fieldValidator], mercadoPagoAddMessageToOrder);
-router.post("/chat", [fieldValidator], addChatMessageForProduct);
-router.post("/audit", [fieldValidator], newAuditRegister);
-
 // [PUT]
 router.put("/order", [fieldValidator], mercadoPagoUpdateOrder);
 router.put(
@@ -66,6 +59,13 @@ router.put(
   [fieldValidator],
   mercadoPagoUpdatePendingBalance
 );
+
+// [POST]
+router.post("/payment", [fieldValidator], mercadoPagoCheckout);
+router.post("/order", [fieldValidator], mercadoPagoSaveOrder);
+router.post("/order/message", [fieldValidator], mercadoPagoAddMessageToOrder);
+router.post("/chat", [fieldValidator], addChatMessageForProduct);
+router.post("/audit", [fieldValidator], newAuditRegister);
 
 // DELETE
 router.delete("/order/:id", [fieldValidator], mercadoPagoRemoveOrder);

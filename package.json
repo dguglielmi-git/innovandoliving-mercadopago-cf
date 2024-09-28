@@ -3,7 +3,9 @@
   "version": "2.2.0-rc",
   "author": "Daniel Guglielmi",
   "dependencies": {
+    "aws-sdk": "^2.1691.0",
     "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
     "firebase-functions": "^5.0.1",
     "firebase-tools": "^13.10.2",
     "mongoose": "^7.2.2"

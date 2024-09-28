@@ -23,10 +23,7 @@ const getCart = async (req, res) => {
         users_permissions_user: id
       })
       .populate({
-        path: 'producto',
-        populate: {
-          path: 'poster'
-        }
+        path: 'producto'
       })
     return res.json(cartFound)
   } catch (error) {

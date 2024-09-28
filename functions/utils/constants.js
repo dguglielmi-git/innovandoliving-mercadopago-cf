@@ -78,9 +78,16 @@ const ERROR_UPDATING_PRODUCT =
 const PRODUCT_SUCCESSFULLY_DELETED = 'The product was successfully deleted.'
 const ERROR_DELETING_PRODUCT =
   'An error occurred when trying to delete the product'
-  const PRODUCT_NOT_FOUND = 'The product could not be found.'
+const PRODUCT_NOT_FOUND = 'The product could not be found.'
+
+const S3_MESSAGES = {
+  ERROR_UPLOADING_FILES: 'Error when trying to upload the files.',
+  ERROR_GENERATING_SIGNED_URL: 'Error generating signed URL',
+  SIGNED_URL_NOT_GENERATED: 'We could not generate the signed URL'
+}
 
 module.exports = {
+  S3_MESSAGES,
   PRODUCT_NOT_FOUND,
   PRODUCT_SUCCESSFULLY_DELETED,
   ERROR_DELETING_PRODUCT,
