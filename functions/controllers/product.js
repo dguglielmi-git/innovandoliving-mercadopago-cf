@@ -5,7 +5,7 @@ const {
   PRODUCT_SUCCESSFULLY_UPDATED,
   ERROR_UPDATING_PRODUCT,
   PRODUCT_SUCCESSFULLY_DELETED,
-  ERROR_DELETING_PRODUCT,
+  ERROR_DELETING_PRODUCT
 } = require('../utils/constants')
 const {
   ERROR_GETTING_PRODUCTS,
@@ -139,17 +139,23 @@ const updateProduct = async (req, res) => {
 
   try {
     const updatedBody = req.body
-    await Product.findOneAndUpdate({ _id: req.params.id }, updatedBody)
-      .then(() => {
-        res.json({
-          result: PRODUCT_SUCCESSFULLY_UPDATED
-        })
+    const updatedProduct = await Product.findOneAndUpdate(
+      { _id: req.params.id },
+      updatedBody,
+      {
+        new: true
+      }
+    )
+    if (!updatedProduct) {
+      return res.status(HTTP_NOT_FOUND).json({
+        error: `${ERROR_UPDATING_PRODUCT}`
       })
-      .catch(error => {
-        res.status(HTTP_SERVER_ERROR).json({
-          error: `${ERROR_UPDATING_PRODUCT} - error: ${error}`
-        })
-      })
+    }
+
+    res.json({
+      result: PRODUCT_SUCCESSFULLY_UPDATED,
+      product: updatedProduct
+    })
   } catch (error) {
     console.error(error)
     return res.json({
