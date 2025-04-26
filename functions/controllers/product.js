@@ -139,6 +139,13 @@ const updateProduct = async (req, res) => {
 
   try {
     const updatedBody = req.body
+
+    if (updatedBody.screenshots && Array.isArray(updatedBody.screenshots)) {
+      updatedBody.screenshots = updatedBody.screenshots.filter(
+        (screenshot) => screenshot.url.startsWith('http')
+      );
+    }
+
     const updatedProduct = await Product.findOneAndUpdate(
       { _id: req.params.id },
       updatedBody,
