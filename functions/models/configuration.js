@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose')
 
 const ConfigurationSchema = new Schema({
   address_delivery_center: String,
@@ -6,16 +6,16 @@ const ConfigurationSchema = new Schema({
   km_price: {
     type: Schema.Types.Decimal128,
     get: function (value) {
-      return value ? Number(value.toString()) : null;
-    },
+      return value ? Number(value.toString()) : null
+    }
   },
   published_at: {
     type: Date,
-    default: Date.now,
+    default: Date.now
   },
   createAt: {
     type: Date,
-    default: Date.now,
+    default: Date.now
   },
   updateAt: Date,
   created_by: Schema.Types.ObjectId,
@@ -26,6 +26,7 @@ const ConfigurationSchema = new Schema({
   twitter_url: String,
   whatsapp_num: String,
   email_url: String,
-});
+  external_provider_price: Number
+})
 
-module.exports = model("Configuration", ConfigurationSchema);
+module.exports = model('Configuration', ConfigurationSchema)
